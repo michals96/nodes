@@ -16,11 +16,25 @@ public class NodeCommandToNode {
         return nodePath.split("/").length;
     }
 
-    public static Node map(NodeCommand nodeCommand) {
+    public static List<Node> getNodeList(String nodePath, Integer val) {
+        String[] split = nodePath.split("/");
         List<Node> nodeList = new ArrayList<>();
+        for(int i=1; i< split.length-1;i++) {
+            nodeList.add(new Node(split[i]));
+        }
+
+        nodeList.add(new Node(split[split.length-1], val));
+
+        return nodeList;
+    }
+
+    public static Node map(NodeCommand nodeCommand) {
 
         if(getNodeAmount(nodeCommand.getPath()) > 1) {
-            nodeList.add(generateNode());
+            return Node.builder()
+                .name(getNodeName(nodeCommand.getPath()))
+                .nodeList(getNodeList(nodeCommand.getPath(), nodeCommand.getValue()))
+                .build();
         }
 
         return Node.builder()
