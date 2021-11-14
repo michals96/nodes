@@ -19,7 +19,7 @@ public class NodeCommandToNode {
     public static List<Node> getNodeList(String nodePath, Integer val) {
         String[] split = nodePath.split("/");
         List<Node> nodeList = new ArrayList<>();
-        for(int i=1; i< split.length-1;i++) {
+        for(int i=0; i< split.length-1;i++) {
             nodeList.add(new Node(split[i]));
         }
 
@@ -28,17 +28,15 @@ public class NodeCommandToNode {
         return nodeList;
     }
 
-    public static Node map(NodeCommand nodeCommand) {
+    public static List<Node> map(NodeCommand nodeCommand) {
+        List<Node> nodeList = new ArrayList<>();
 
         if(getNodeAmount(nodeCommand.getPath()) > 1) {
-            return Node.builder()
-                .name(getNodeName(nodeCommand.getPath()))
-                .nodeList(getNodeList(nodeCommand.getPath(), nodeCommand.getValue()))
-                .build();
+            nodeList.addAll(getNodeList(nodeCommand.getPath(), nodeCommand.getValue()));
+        } else {
+            nodeList.add(new Node(getNodeName(nodeCommand.getPath()), nodeCommand.getValue()));
         }
 
-        return Node.builder()
-            .name(getNodeName(nodeCommand.getPath()))
-            .build();
+        return nodeList;
     }
 }

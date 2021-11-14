@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.TreeMap;
 
 import com.example.demo.mapper.NodeCommandToNode;
 import com.example.demo.model.Node;
@@ -17,21 +18,28 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 public class NodeService {
-    private Map<String, Map> nodeMap = new HashMap<>();
+    private Map<String, Map> nodeMap = new TreeMap<>();
 
     public Map<String, Map> getNodes(NodeCommand nodeCommand) {
         generateNodes(NodeCommandToNode.map(nodeCommand));
         return nodeMap;
     }
 
-    public void generateNodes(Node node) {
+    public void generateNodes(List<Node> nodes) {
         this.nodeMap.clear();
-        this.nodeMap.put(node.getName(), generateNodeMap(node));
-    }
-
-    public Map generateNodeMap(Node node) {
-        return node.getNodeList()
-            .stream()
-            .collect(Collectors.toMap(Node::getName, Node::getValue));
+        Map<String, Map> mapPtr = new TreeMap<>();
+        Map<String, Map> insertMap = new TreeMap<>();
+        mapPtr = nodeMap;
+        for (int i = 0; i < nodes.size(); i++) {
+            if(nodes.get(i).getValue() == null) {
+                if(nodes.get(i+1).getValue()==null) {
+                    insertMap = new HashMap<>( Map.of(nodes.get(i+1).getName(), new HashMap<>(Map.of(nodes.get(i+1).getName(), ""))));
+                    mapPtr.put(nodes.get(i).getName(), insertMap);
+                    mapPtr = insertMap;
+                } else {
+                    mapPtr.put(nodes.get(i).getName(), Map.of(nodes.get(i+1).getName(), nodes.get(i+1).getValue()));
+                }
+            }
+        }
     }
 }

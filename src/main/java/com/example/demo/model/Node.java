@@ -1,27 +1,16 @@
 package com.example.demo.model;
 
-import java.util.List;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
-@Builder
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 public class Node {
-    private String name;
-    private Integer value;
-    private List<Node> nodeList;
+    @NonNull private final String name;
+    private final Integer value;
 
-    public Node(final String s) {
-        this.name = s;
-    }
-
-    public Node(final String s, final Integer val) {
-        this.name = s;
-        this.value = val;
+    public Node(final String name) {
+        this.name = name;
+        this.value = null;
     }
 }
