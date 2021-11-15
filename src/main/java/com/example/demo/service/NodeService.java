@@ -25,6 +25,14 @@ public class NodeService {
         return nodeMap;
     }
 
+    public Map<String, Map> getReducedNodes(NodeCommand nodeCommand) {
+        removeNodes(NodeCommandToNode.map(nodeCommand));
+        return nodeMap;
+    }
+    public void removeNodes(List<Node> nodes) {
+        // do something
+    }
+
     public void generateNodes(List<Node> nodes) {
         this.nodeMap.clear();
         Map<String, Map> mapPtr = new TreeMap<>();
