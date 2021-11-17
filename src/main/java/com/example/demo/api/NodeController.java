@@ -20,9 +20,9 @@ public class NodeController {
     private final Environment environment;
 
     @PutMapping
-    public Map<String, Map> createStructure(@RequestBody NodeCommand nodeCommand){
+    public Map<String, Map> createStructure(@RequestBody NodeCommand nodeCommand) {
 
-        if(Arrays.asList(environment.getActiveProfiles()).contains("db")) {
+        if (Arrays.asList(environment.getActiveProfiles()).contains("db")) {
             return nodeService.getNodesFromDb(nodeCommand);
         }
 
@@ -30,7 +30,7 @@ public class NodeController {
     }
 
     @DeleteMapping
-    public void removeStructure(){
-        System.out.println("");
+    public Map<String, Map> removeStructure(@RequestBody NodeCommand nodeCommand) {
+        return nodeService.getReducedNodes(nodeCommand);
     }
 }

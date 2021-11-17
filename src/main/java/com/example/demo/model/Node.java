@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Node {
     @NonNull private final String name;
-    private final Integer value;
+    private Integer value;
 
     public Node(final String name) {
         this.name = name;

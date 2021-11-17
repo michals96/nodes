@@ -11,8 +11,3 @@ public class DemoApplication {
 	}
 
 }
-
-/*
-1. dokonczyc
-2. dwa profile (dla pamieci lokalnej i dla bazy danych)
- */
